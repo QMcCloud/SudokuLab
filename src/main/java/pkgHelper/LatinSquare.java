@@ -1,18 +1,35 @@
 package pkgHelper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LatinSquare {
+import org.apache.commons.lang.ArrayUtils;
 
+import pkgEnum.ePuzzleViolation;
+
+public class LatinSquare {
+	
+	//ATTRIBUTES
+	
+	private boolean bIgnoreZero;
 	/**
 	 * LatinSquare - two dimensional array that's the core of the puzzle
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
 	 */
+	
 	private int[][] LatinSquare;
-
 	/**
+	 * ArrayList to collect PuzzleViolations
+	 */
+	
+	private ArrayList<PuzzleViolation> PV = new ArrayList<PuzzleViolation>();
+
+	
+	//CONSTRUCTORS
+	
+		/**
 	 * No-arg constructor, make it public, don't do anything in the constructor
 	 * 
 	 * @version 1.1
@@ -35,6 +52,93 @@ public class LatinSquare {
 		this.LatinSquare = puzzle;
 	}
 
+	
+	//METHODS
+	
+		/**
+	 * set LatinSquare instance attribute
+	 * 
+	 * @version 1.1
+	 * @since Lab #1
+	 * @param latinSquare
+	 *            - pass in an instance of a possible LatinSquare
+	 */
+	public void setLatinSquare(int[][] latinSquare) {
+		LatinSquare = latinSquare;
+	}
+
+	public void setbIgnoreZeros(boolean bIgnoreZero) {
+		this.bIgnoreZero = bIgnoreZero;
+	}
+	
+	
+	/**
+	 * getRow - return a one-dimension array from a given row in the LatinSquare<br>
+	 * 
+	 * 0 1 2 3 <br>
+	 * 1 2 3 4 <br>
+	 * 3 4 1 2 <br>
+	 * 4 1 3 2 <br>
+	 * 
+	 * In this example, getRow(1) would return [1],[2],[3],[4]
+	 * 
+	 * @version 1.1
+	 * @since Lab #1
+	 * @param iRow
+	 *            given row of the two dimensional array to return
+	 * @return one dimensional array of the given row
+	 */
+	public int[] getRow(int iRow) {
+		int[] Row = new int[this.LatinSquare.length];
+
+		Row = this.LatinSquare[iRow];
+
+		return Row;
+	}
+	
+	/**
+	 * getColumn - return a one-dimension array from a given column in the
+	 * LatinSquare <br>
+	 * 
+	 * 0 1 2 3 <br>
+	 * 1 2 3 4 <br>
+	 * 3 4 1 2 <br>
+	 * 4 1 3 2 <br>
+	 *
+	 *
+	 * In this example, getColumn(1) would return [1],[2],[4],[1]
+	 *
+	 * @version 1.1
+	 * @since Lab #1
+	 * @param iCol
+	 *            The column you want returned from the two-dimensional array
+	 * @return one dimensional array of values for the given column
+	 */
+	public int[] getColumn(int iCol) {
+
+		int[] Col = new int[this.LatinSquare.length];
+
+		for (int row = 0; row < this.LatinSquare.length; row++) {
+			Col[row] = LatinSquare[row][iCol];
+		}
+		return Col;
+	}
+
+		/**
+	 * return LatinSquare instance attribute
+	 * 
+	 * @version 1.1
+	 * @since Lab #1
+	 * @return - returns the instance of the LatinSquare
+	 */
+	public int[][] getLatinSquare() {
+		return LatinSquare;
+	}
+	
+	protected ArrayList<PuzzleViolation> getPV() {
+		return PV;
+	}
+	
 	/**
 	 * ContainsZero - return 'true' if any element in the LatinSquare is a zero
 	 * 
@@ -77,69 +181,6 @@ public class LatinSquare {
 		}
 		return doesElementExist;
 
-	}
-
-	/**
-	 * getColumn - return a one-dimension array from a given column in the
-	 * LatinSquare <br>
-	 * 
-	 * 0 1 2 3 <br>
-	 * 1 2 3 4 <br>
-	 * 3 4 1 2 <br>
-	 * 4 1 3 2 <br>
-	 *
-	 *
-	 * In this example, getColumn(1) would return [1],[2],[4],[1]
-	 *
-	 * @version 1.1
-	 * @since Lab #1
-	 * @param iCol
-	 *            The column you want returned from the two-dimensional array
-	 * @return one dimensional array of values for the given column
-	 */
-	public int[] getColumn(int iCol) {
-
-		int[] Col = new int[this.LatinSquare.length];
-
-		for (int row = 0; row < this.LatinSquare.length; row++) {
-			Col[row] = LatinSquare[row][iCol];
-		}
-		return Col;
-	}
-
-	/**
-	 * return LatinSquare instance attribute
-	 * 
-	 * @version 1.1
-	 * @since Lab #1
-	 * @return - returns the instance of the LatinSquare
-	 */
-	public int[][] getLatinSquare() {
-		return LatinSquare;
-	}
-
-	/**
-	 * getRow - return a one-dimension array from a given row in the LatinSquare<br>
-	 * 
-	 * 0 1 2 3 <br>
-	 * 1 2 3 4 <br>
-	 * 3 4 1 2 <br>
-	 * 4 1 3 2 <br>
-	 * 
-	 * In this example, getRow(1) would return [1],[2],[3],[4]
-	 * 
-	 * @version 1.1
-	 * @since Lab #1
-	 * @param iRow
-	 *            given row of the two dimensional array to return
-	 * @return one dimensional array of the given row
-	 */
-	public int[] getRow(int iRow) {
-		int[] Row = new int[this.LatinSquare.length];
-
-		Row = this.LatinSquare[iRow];
-
-		return Row;
 	}
 
 	/**
@@ -189,6 +230,10 @@ public class LatinSquare {
 
 		boolean hasDuplicates = false;
 		int[] sortedArray = Arrays.copyOf(arr, arr.length);
+		
+		//Preps Array to be sorted through hasDuplicates by removing Zeroes if any
+		if (bIgnoreZero)
+			sortedArray = RemoveZeros(sortedArray);
 		Arrays.sort(sortedArray);
 
 		for (int i = 0; i < sortedArray.length - 1; i++) {
@@ -199,6 +244,30 @@ public class LatinSquare {
 		}
 		return hasDuplicates;
 	}
+	
+	protected boolean hasDuplicates()
+	{
+		for (int i = 0; i < LatinSquare.length; i++) {
+			if (hasDuplicates(getRow(i)))
+				AddPuzzleViolation(new PuzzleViolation(ePuzzleViolation.DupRow,i));
+		}
+
+		for (int j = 0; j < LatinSquare.length; j++) {
+			if (hasDuplicates(getColumn(j)))
+				AddPuzzleViolation(new PuzzleViolation(ePuzzleViolation.DupCol,j));
+		}
+		
+		return (this.PV.size() > 0);
+	}
+	
+	protected void AddPuzzleViolation(PuzzleViolation pv) {
+		PV.add(pv);
+	}
+	
+	protected void ClearPuzzleViolation() {
+		PV.clear();
+	}
+	
 
 	/**
 	 * isLatinSquare - return 'true' if: Each row and column doesn't contain
@@ -240,16 +309,17 @@ public class LatinSquare {
 		return isLatinSquare;
 	}
 
-	/**
-	 * set LatinSquare instance attribute
-	 * 
-	 * @version 1.1
-	 * @since Lab #1
-	 * @param latinSquare
-	 *            - pass in an instance of a possible LatinSquare
-	 */
-
-	public void setLatinSquare(int[][] latinSquare) {
-		LatinSquare = latinSquare;
+	public boolean isbIgnoreZero() {
+		return bIgnoreZero;
 	}
+	
+	private int[] RemoveZeros(int[] arr) {
+		while (ArrayUtils.contains(arr, 0))
+			arr = ArrayUtils.removeElement(arr, 0);
+		
+		return arr;
+	}
+
+
+
 }

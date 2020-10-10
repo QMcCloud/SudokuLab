@@ -80,10 +80,18 @@ public class LatinSquareTest {
 	@Test
 	public void getColumn_Test1() {
 		
-		int[][] MySquare = { { 1, 2, 3 }, { 3, 1, 2 }, { 2, 3, 1 } };
+		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
+							{6, 7, 2, 1, 9, 5, 3, 4, 8},
+							{1, 9, 8, 3, 4, 2, 5, 6, 7},
+							{8, 5, 9, 7, 6, 1, 4, 2, 3},
+							{4, 2, 6, 8, 5, 3, 7, 9, 1},
+							{7, 1, 3, 9, 2, 4, 8, 5, 6},
+							{9, 6, 1, 5, 3, 7, 2, 8, 4},
+							{2, 8, 7, 4, 1, 9, 6, 3, 5},
+							{3, 4, 5, 2, 8, 6, 1, 7, 9}};
 
 		LatinSquare LS = new LatinSquare(MySquare);
-		int [] ExpectedCol = {2,1,3};
+		int [] ExpectedCol = {3, 7, 9, 5, 2, 1, 6, 8, 4};
 		int [] Col = LS.getColumn(1);
 		
 		assertTrue(Arrays.equals(ExpectedCol, Col));
@@ -104,7 +112,15 @@ public class LatinSquareTest {
 	@Test
 	public void isLatinSquare_Test1() {
 		
-		int[][] MySquare = { { 1, 2, 3 }, { 3, 1, 2 }, { 2, 3, 1 } };
+		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
+							{6, 7, 2, 1, 9, 5, 3, 4, 8},
+							{1, 9, 8, 3, 4, 2, 5, 6, 7},
+							{8, 5, 9, 7, 6, 1, 4, 2, 3},
+							{4, 2, 6, 8, 5, 3, 7, 9, 1},
+							{7, 1, 3, 9, 2, 4, 8, 5, 6},
+							{9, 6, 1, 5, 3, 7, 2, 8, 4},
+							{2, 8, 7, 4, 1, 9, 6, 3, 5},
+							{3, 4, 5, 2, 8, 6, 1, 7, 9}};
 
 		LatinSquare LS = new LatinSquare(MySquare);
 		
@@ -114,8 +130,33 @@ public class LatinSquareTest {
 	@Test
 	public void isLatinSquare_Test2() {
 		
-		int[][] MySquare = { { 1, 2, 3 }, { 3, 1, 2 }, { 4, 5, 6 } };
-
+		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
+							{6, 7, 2, 1, 9, 5, 3, 4, 8},
+							{1, 9, 8, 3, 4, 2, 5, 6, 7},
+							{8, 5, 9, 7, 6, 1, 4, 2, 3},
+							{4, 2, 6, 8, 5, 3, 7, 9, 1},
+							{7, 1, 3, 9, 2, 4, 8, 5, 6},
+							{9, 6, 1, 5, 3, 7, 2, 8, 4},
+							{2, 8, 7, 4, 1, 9, 6, 3, 5},
+							{3, 4, 5, 2, 8, 6, 1, 7, 1}};
+		// has 1 in (8,8),. duplicate one's in last row and column
+		LatinSquare LS = new LatinSquare(MySquare);
+		
+		assertFalse(LS.isLatinSquare());
+	}
+	@Test
+	public void isLatinSquare_Test3() {
+		
+		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
+							{6, 7, 2, 1, 9, 5, 3, 4, 8},
+							{1, 9, 8, 3, 4, 2, 5, 6, 7},
+							{8, 5, 9, 7, 6, 1, 4, 2, 3},
+							{4, 2, 6, 8, 5, 3, 7, 9, 1},
+							{7, 1, 3, 9, 2, 4, 8, 5, 6},
+							{9, 6, 1, 5, 3, 7, 2, 8, 4},
+							{2, 8, 7, 4, 1, 9, 6, 3, 5},
+							{3, 4, 5, 2, 8, 6, 1, 7, 10}};
+		// 10 in last row/column but nowhere else
 		LatinSquare LS = new LatinSquare(MySquare);
 		
 		assertFalse(LS.isLatinSquare());

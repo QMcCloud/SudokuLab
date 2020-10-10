@@ -19,26 +19,26 @@ public class Sudoku​ extends LatinSquare {
 		}
 	}
 
-	public int[][] getPuzzle(){
+	protected int[][] getPuzzle(){
 		return super.getLatinSquare();
 	}
 	
-	int[] getRegion​(int r) {
+	protected int[] getRegion​(int r) {
 		int[] region = new int[iSize];
-		int cStart = (r%iSqrtSize) * iSqrtSize;
-		int rStart = (r/iSqrtSize) * iSqrtSize;
+		int rStart = (r%iSqrtSize) * iSqrtSize;
+		int cStart = (r/iSqrtSize) * iSqrtSize;
 		for(int iCol = 0; iCol<iSqrtSize; iCol++)for(int iRow = 0; iRow < iSqrtSize; iRow ++){
 			region[iCol*iSqrtSize + iRow] = getPuzzle()[iCol+cStart][iRow+rStart];
 		}
 		return region;
 	}
 	
-	int[] getRegion​(int iCol, int iRow) {
-		int r = iCol/iSqrtSize + iSqrtSize * (iRow / iSqrtSize);
+	protected int[] getRegion​(int iRow, int iCol) {
+		int r = (iSqrtSize * (iCol/iSqrtSize)) + ((iRow / iSqrtSize));
 		return getRegion​(r);
 	}
 	
-	boolean hasDuplicates() {
+	protected boolean hasDuplicates() {
 		for(int i = 0; i < iSize; i++) {
 			if(super.hasDuplicates(getRegion​(i)) || super.hasDuplicates(getRow(i))|| super.hasDuplicates(getColumn(i))) {
 				return true;
@@ -47,21 +47,21 @@ public class Sudoku​ extends LatinSquare {
 		return false;
 	}
 	
-	boolean isPartialSudoku() {
+	protected boolean isPartialSudoku() {
 		if(!ContainsZero() || hasDuplicates()) {
 			return false;
 		}
 		return true;
 	}
 	
-	boolean isSudoku() {
+	protected boolean isSudoku() {
 		if(!isLatinSquare() || ContainsZero() || hasDuplicates()) {
 			return false;
 		}
 		return true;
 	}
 	
-	boolean isValidValue​(int iCol, int iRow, int iValue) throws Exception {
+	protected boolean isValidValue​(int iCol, int iRow, int iValue) throws Exception {
 		int[][] np = this.getPuzzle();
 		np[iCol][iRow] = iValue;
 		return new Sudoku​(np).isPartialSudoku();
