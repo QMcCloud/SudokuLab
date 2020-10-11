@@ -6,6 +6,10 @@ public class Sudoku​ extends LatinSquare {
 	private int iSize;
 	private int iSqrtSize;
 
+	public Sudoku​() throws Exception {
+		this(new int[9][9]);
+	}
+	
 	public Sudoku​(int iSize) throws Exception {
 		this(new int[iSize][iSize]);
 	}
