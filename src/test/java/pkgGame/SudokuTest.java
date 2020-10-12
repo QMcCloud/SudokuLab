@@ -113,8 +113,14 @@ class SudokuTest {
 	}
 	
 	@Test
-	public void hasDuplicates_test() {
-		//TODO: ADD TESTING
+	public void hasDuplicates_test() throws Exception {
+		//TODO: Double check this
+		int[][] puzzle = {{1,2},{1,2}};
+		Sudoku​ sud = new Sudoku​(puzzle);
+		assertTrue(sud.hasDuplicates());
+		int[][] puz = {{1,3},{2,4}};
+		Sudoku​ sudo = new Sudoku​(puz);
+		assertTrue(!sudo.hasDuplicates());
 		}
 	@Test
 	public void isSudoku_test1() throws Exception {
@@ -131,23 +137,41 @@ class SudokuTest {
 		Sudoku​ S1 = new Sudoku​(puzzle);
 		
 		assertTrue(S1.isSudoku());
-	}}
-		/*
-		@Test
-		public void {
-		
+	}
 
-}
 		@Test
-		public void {
-			
+		public void isPartialSudokuTest1() throws Exception {
+			//TODO: Double check this
+			int[][] puzzle = {{1,0,0},{0,2,0},{0,0,3}};
+			Sudoku​ ku = new Sudoku​(puzzle);
+			assertTrue(ku.isPartialSudoku());
 		}
 		
 		@Test
-		public void {
-			
+		public void isValidValueTest() throws Exception {
+			//TODO: Double check this
+			int[][] puzzle = {{1,0,0},{0,2,0},{0,0,3}};
+			Sudoku​ oku = new Sudoku​(puzzle);
+			assertTrue(oku.isValidValue​(1,0,3));
 		}
 		
+		@Test
+		public void isPartialSudokuTest2() throws Exception {
+			//TODO: Double check this
+			int[][] puzzle = {{1,0,0},{0,0,3},{0,0,3}};
+			Sudoku​ doku = new Sudoku​(puzzle);
+			assertTrue(!doku.isPartialSudoku());
+		}
+
+		@Test
+		public void getPuzzleTest() throws Exception {
+			//TODO: Double check this
+			int[][] puzzle = {{1,0,0},{0,2,0},{0,0,3}};
+			Sudoku​ udoku = new Sudoku​(puzzle);
+			assertEquals(udoku.getPuzzle(), puzzle);
+		}
+		
+		/*
 		@Test
 		public void {
 			
@@ -169,7 +193,7 @@ class SudokuTest {
 		}
 	*/
 	
-	
+}
 	
 	
 	

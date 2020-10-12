@@ -6,9 +6,12 @@ public class Sudoku​ extends LatinSquare {
 	private int iSize;
 	private int iSqrtSize;
 
+	/*
 	public Sudoku​() throws Exception {
 		this(new int[9][9]);
 	}
+	*/
+	// Just reread the document and it says we shouldn't have this one yet. Whoops.
 	
 	public Sudoku​(int iSize) throws Exception {
 		this(new int[iSize][iSize]);
@@ -52,10 +55,16 @@ public class Sudoku​ extends LatinSquare {
 	}
 	
 	protected boolean isPartialSudoku() {
-		if(!ContainsZero() || hasDuplicates()) {
+		if(!ContainsZero() || (!ContainsZero() && hasDuplicates())) {
 			return false;
 		}
-		return true;
+		else {
+			this.setbIgnoreZeros(true);
+			if (hasDuplicates()) {
+				return false;
+			}
+			return true;
+		}
 	}
 	
 	protected boolean isSudoku() {
