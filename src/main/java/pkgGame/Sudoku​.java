@@ -55,19 +55,17 @@ public class Sudoku​ extends LatinSquare {
 	}
 	
 	protected boolean isPartialSudoku() {
-		if(!ContainsZero() || (!ContainsZero() && hasDuplicates())) {
+		this.setbIgnoreZeros(true);
+		if(!ContainsZero() || hasDuplicates()) {
 			return false;
 		}
 		else {
-			this.setbIgnoreZeros(true);
-			if (hasDuplicates()) {
-				return false;
-			}
 			return true;
 		}
 	}
 	
 	protected boolean isSudoku() {
+		this.setbIgnoreZeros(false);
 		if(!isLatinSquare() || ContainsZero() || hasDuplicates()) {
 			return false;
 		}
