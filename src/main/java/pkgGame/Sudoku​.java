@@ -45,6 +45,7 @@ public class Sudoku​ extends LatinSquare {
 		return getRegion​(r);
 	}
 	
+
 	protected boolean hasDuplicates() {
 		for(int i = 0; i < iSize; i++) {
 			if(super.hasDuplicates(getRegion​(i)) || super.hasDuplicates(getRow(i))|| super.hasDuplicates(getColumn(i))) {
@@ -55,7 +56,6 @@ public class Sudoku​ extends LatinSquare {
 	}
 	
 	protected boolean isPartialSudoku() {
-		this.setbIgnoreZeros(true);
 		if(!ContainsZero() || hasDuplicates()) {
 			return false;
 		}
@@ -65,7 +65,7 @@ public class Sudoku​ extends LatinSquare {
 	}
 	
 	protected boolean isSudoku() {
-		this.setbIgnoreZeros(false);
+
 		if(!isLatinSquare() || ContainsZero() || hasDuplicates()) {
 			return false;
 		}

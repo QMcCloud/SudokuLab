@@ -11,7 +11,6 @@ public class LatinSquare {
 	
 	//ATTRIBUTES
 	
-	private boolean bIgnoreZero;
 	/**
 	 * LatinSquare - two dimensional array that's the core of the puzzle
 	 * 
@@ -67,9 +66,7 @@ public class LatinSquare {
 		LatinSquare = latinSquare;
 	}
 
-	public void setbIgnoreZeros(boolean bIgnoreZero) {
-		this.bIgnoreZero = bIgnoreZero;
-	}
+
 	
 	
 	/**
@@ -227,47 +224,21 @@ public class LatinSquare {
 	 * @return - returns 'true' if any of the elements are duplicate
 	 */
 	public boolean hasDuplicates(int[] arr) {
-
-		boolean hasDuplicates = false;
 		int[] sortedArray = Arrays.copyOf(arr, arr.length);
-		
 		//Preps Array to be sorted through hasDuplicates by removing Zeroes if any
-		if (bIgnoreZero)
-			sortedArray = RemoveZeros(sortedArray);
+		sortedArray = removeZeros(sortedArray);
 		Arrays.sort(sortedArray);
-
+		//duplicate checker
 		for (int i = 0; i < sortedArray.length - 1; i++) {
 			if (sortedArray[i] == sortedArray[i + 1]) {
-				hasDuplicates = true;
-				break;
+				//compares index value to the one following
+				return true;
 			}
 		}
-		return hasDuplicates;
+		return false;
 	}
 	
-	protected boolean hasDuplicates()
-	{
-		for (int i = 0; i < LatinSquare.length; i++) {
-			if (hasDuplicates(getRow(i)))
-				AddPuzzleViolation(new PuzzleViolation(ePuzzleViolation.DupRow,i));
-		}
 
-		for (int j = 0; j < LatinSquare.length; j++) {
-			if (hasDuplicates(getColumn(j)))
-				AddPuzzleViolation(new PuzzleViolation(ePuzzleViolation.DupCol,j));
-		}
-		
-		return (this.PV.size() > 0);
-	}
-	
-	protected void AddPuzzleViolation(PuzzleViolation pv) {
-		PV.add(pv);
-	}
-	
-	protected void ClearPuzzleViolation() {
-		PV.clear();
-	}
-	
 
 	/**
 	 * isLatinSquare - return 'true' if: Each row and column doesn't contain
@@ -308,12 +279,8 @@ public class LatinSquare {
 
 		return isLatinSquare;
 	}
-
-	public boolean isbIgnoreZero() {
-		return bIgnoreZero;
-	}
 	
-	private int[] RemoveZeros(int[] arr) {
+	public int[] removeZeros(int[] arr ) {
 		while (ArrayUtils.contains(arr, 0))
 			arr = ArrayUtils.removeElement(arr, 0);
 		
