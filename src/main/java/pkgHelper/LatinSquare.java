@@ -23,7 +23,6 @@ public class LatinSquare {
 	 * ArrayList to collect PuzzleViolations
 	 */
 	
-	private ArrayList<PuzzleViolation> PV = new ArrayList<PuzzleViolation>();
 
 	
 	//CONSTRUCTORS
@@ -131,10 +130,7 @@ public class LatinSquare {
 	public int[][] getLatinSquare() {
 		return LatinSquare;
 	}
-	
-	protected ArrayList<PuzzleViolation> getPV() {
-		return PV;
-	}
+
 	
 	/**
 	 * ContainsZero - return 'true' if any element in the LatinSquare is a zero

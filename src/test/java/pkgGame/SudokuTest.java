@@ -29,7 +29,14 @@ public class SudokuTest {
 	  });
 	 
 	}
-
+	
+	@Test
+	public void getPuzzleTest() throws Exception {
+		// TODO: Double check this
+		int[][] puzzle = { { 1, 0, 0 }, { 0, 2, 0 }, { 0, 0, 3 } };
+		Sudoku​ udoku = new Sudoku​(puzzle);
+		assertEquals(udoku.getPuzzle(), puzzle);
+	}
 	@Test
 	public void getRegion_Test1() {
 
@@ -261,5 +268,28 @@ public class SudokuTest {
 		
 		assertTrue(Arrays.equals(Region5, s1.getRegion​(5)));
 		
+	}
+	@Test
+	public void isPartialSudokuTest1() throws Exception {
+		// TODO: Double check this
+		int[][] puzzle = { { 1, 0, 0 }, { 0, 2, 0 }, { 0, 0, 3 } };
+		Sudoku​ ku = new Sudoku​(puzzle);
+		assertTrue(ku.isPartialSudoku());
+	}
+	
+	@Test
+	public void isPartialSudokuTest2() throws Exception {
+		// TODO: Double check this
+		int[][] puzzle = { { 1, 0, 0 }, { 0, 0, 3 }, { 0, 0, 3 } };
+		Sudoku​ doku = new Sudoku​(puzzle);
+		assertFalse(doku.isPartialSudoku());
+	}
+	
+	@Test
+	public void isValidValueTest() throws Exception {
+		// TODO: Double check this
+		int[][] puzzle = { { 1, 0, 0 }, { 0, 2, 0 }, { 0, 0, 3 } };
+		Sudoku​ oku = new Sudoku​(puzzle);
+		assertTrue(oku.isValidValue​(1, 0, 3));
 	}
 }
