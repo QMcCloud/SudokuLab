@@ -14,7 +14,7 @@ public class SudokuTest {
 	public void Sudoku_Test1() {
 
 		try {
-			Sudoku​ s1 = new Sudoku​(9);
+			Sudoku s1 = new Sudoku(9);
 		} catch (Exception e) {
 			fail("Test failed to build a Sudoku");
 		}
@@ -25,18 +25,11 @@ public class SudokuTest {
 	public void Sudoku_Test2() {
 	 
 	  Assertions.assertThrows(Exception.class, () -> {
-		  Sudoku​ s1 = new Sudoku​(10);
+		  Sudoku s1 = new Sudoku(10);
 	  });
 	 
 	}
-	
-	@Test
-	public void getPuzzleTest() throws Exception {
-		// TODO: Double check this
-		int[][] puzzle = { { 1, 0, 0 }, { 0, 2, 0 }, { 0, 0, 3 } };
-		Sudoku​ udoku = new Sudoku​(puzzle);
-		assertEquals(udoku.getPuzzle(), puzzle);
-	}
+
 	@Test
 	public void getRegion_Test1() {
 
@@ -54,9 +47,9 @@ public class SudokuTest {
 
 		int[] region;
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 
-			region = s1.getRegion​(1);
+			region = s1.getRegion(1);
 			System.out.println(Arrays.toString(region));			
 			assertTrue(Arrays.equals(ExpectedRegion, region));
 
@@ -82,9 +75,9 @@ public class SudokuTest {
 
 		int[] region;
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 
-			region = s1.getRegion​(0,2);
+			region = s1.getRegion(0,2);
 			System.out.println(Arrays.toString(region));			
 			assertTrue(Arrays.equals(ExpectedRegion, region));
 
@@ -102,7 +95,7 @@ public class SudokuTest {
 		{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertTrue(s1.isSudoku());
 
 		} catch (Exception e) {
@@ -119,7 +112,7 @@ public class SudokuTest {
 		{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertFalse(s1.isSudoku());
 
 		} catch (Exception e) {
@@ -143,7 +136,7 @@ public class SudokuTest {
 				{ 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertFalse(s1.isSudoku());
 
 		} catch (Exception e) {
@@ -167,7 +160,7 @@ public class SudokuTest {
 				{ 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertFalse(s1.isSudoku());
 
 		} catch (Exception e) {
@@ -187,7 +180,7 @@ public class SudokuTest {
 		{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertTrue(s1.isPartialSudoku());
 
 		} catch (Exception e) {
@@ -215,7 +208,7 @@ public class SudokuTest {
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertFalse(s1.isPartialSudoku());
 
 		} catch (Exception e) {
@@ -233,7 +226,7 @@ public class SudokuTest {
 		{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
 
 		try {
-			Sudoku​ s1 = new Sudoku​(puzzle);
+			Sudoku s1 = new Sudoku(puzzle);
 			assertFalse(s1.isPartialSudoku());
 
 		} catch (Exception e) {
@@ -245,7 +238,7 @@ public class SudokuTest {
 	@Test
 	public void TestRegionNbr()
 	{
-		Sudoku​ s1= null;
+		Sudoku s1= null;
 		
 		int[][] puzzle = { 
 				{ 5, 3, 4, 6, 7, 8, 9, 1, 2 }, 
@@ -261,35 +254,12 @@ public class SudokuTest {
 		int [] Region5 = {4,2,3,7,9,1,8,5,6};
 		
 		try {
-			 s1 = new Sudoku​(puzzle);
+			 s1 = new Sudoku(puzzle);
 		} catch (Exception e) {
 			fail("Bad Sudoku");
 		}
 		
-		assertTrue(Arrays.equals(Region5, s1.getRegion​(5)));
+		assertTrue(Arrays.equals(Region5, s1.getRegion(5)));
 		
-	}
-	@Test
-	public void isPartialSudokuTest1() throws Exception {
-		// TODO: Double check this
-		int[][] puzzle = { { 1, 0, 0 }, { 0, 2, 0 }, { 0, 0, 3 } };
-		Sudoku​ ku = new Sudoku​(puzzle);
-		assertTrue(ku.isPartialSudoku());
-	}
-	
-	@Test
-	public void isPartialSudokuTest2() throws Exception {
-		// TODO: Double check this
-		int[][] puzzle = { { 1, 0, 0 }, { 0, 0, 3 }, { 0, 0, 3 } };
-		Sudoku​ doku = new Sudoku​(puzzle);
-		assertFalse(doku.isPartialSudoku());
-	}
-	
-	@Test
-	public void isValidValueTest() throws Exception {
-		// TODO: Double check this
-		int[][] puzzle = { { 1, 0, 0 }, { 0, 2, 0 }, { 0, 0, 3 } };
-		Sudoku​ oku = new Sudoku​(puzzle);
-		assertTrue(oku.isValidValue​(1, 0, 3));
 	}
 }

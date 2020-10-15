@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 
+import pkgEnum.ePuzzleViolation;
+
 public class LatinSquareTest {
 
 	@Test
@@ -34,36 +36,28 @@ public class LatinSquareTest {
 	}
 
 	@Test
-	public void hasDuplicates_test5() {
-
-		LatinSquare LS = new LatinSquare();
-		int[] arr = { 1, 3, 5, 2, 3 };
-
-		boolean bHasDuplicates = LS.hasDuplicates(arr);
-
-		assertEquals(bHasDuplicates, true);
-
-	}
-	@Test
 	public void hasDuplicates_test3() {
 
 		LatinSquare LS = new LatinSquare();
-		int[] arr = { 0, 3, 0, 2, 0 };
+		LS.setbIgnoreZero(true);
+		int[] arr = { 1, 3, 0, 2, 0 };
 
 		boolean bHasDuplicates = LS.hasDuplicates(arr);
 
 		assertEquals(bHasDuplicates, false);
 
 	}
+	
 	@Test
 	public void hasDuplicates_test4() {
 
 		LatinSquare LS = new LatinSquare();
-		int[] arr = { 0,0,0,0,1 };
+		LS.setbIgnoreZero(true);
+		int[] arr = { 1, 3, 0, 2, 3 };
 
 		boolean bHasDuplicates = LS.hasDuplicates(arr);
 
-		assertEquals(bHasDuplicates, false);
+		assertEquals(bHasDuplicates, true);
 
 	}
 	@Test
@@ -113,21 +107,14 @@ public class LatinSquareTest {
 	@Test
 	public void getColumn_Test1() {
 		
-		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-							{6, 7, 2, 1, 9, 5, 3, 4, 8},
-							{1, 9, 8, 3, 4, 2, 5, 6, 7},
-							{8, 5, 9, 7, 6, 1, 4, 2, 3},
-							{4, 2, 6, 8, 5, 3, 7, 9, 1},
-							{7, 1, 3, 9, 2, 4, 8, 5, 6},
-							{9, 6, 1, 5, 3, 7, 2, 8, 4},
-							{2, 8, 7, 4, 1, 9, 6, 3, 5},
-							{3, 4, 5, 2, 8, 6, 1, 7, 9}};
+		int[][] MySquare = { { 1, 2, 3 }, { 3, 1, 2 }, { 2, 3, 1 } };
 
 		LatinSquare LS = new LatinSquare(MySquare);
-		int [] ExpectedCol = {3, 7, 9, 5, 2, 1, 6, 8, 4};
+		int [] ExpectedCol = {2,1,3};
 		int [] Col = LS.getColumn(1);
 		
 		assertTrue(Arrays.equals(ExpectedCol, Col));
+		System.out.println(Arrays.toString(Col));
 	}
 	
 	@Test
@@ -140,20 +127,13 @@ public class LatinSquareTest {
 		int [] Row = LS.getRow(1);
 		
 		assertTrue(Arrays.equals(ExpectedRow, Row));
+		System.out.println(Arrays.toString(Row));
 	}
 	
 	@Test
 	public void isLatinSquare_Test1() {
 		
-		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-							{6, 7, 2, 1, 9, 5, 3, 4, 8},
-							{1, 9, 8, 3, 4, 2, 5, 6, 7},
-							{8, 5, 9, 7, 6, 1, 4, 2, 3},
-							{4, 2, 6, 8, 5, 3, 7, 9, 1},
-							{7, 1, 3, 9, 2, 4, 8, 5, 6},
-							{9, 6, 1, 5, 3, 7, 2, 8, 4},
-							{2, 8, 7, 4, 1, 9, 6, 3, 5},
-							{3, 4, 5, 2, 8, 6, 1, 7, 9}};
+		int[][] MySquare = { { 1, 2, 3 }, { 3, 1, 2 }, { 2, 3, 1 } };
 
 		LatinSquare LS = new LatinSquare(MySquare);
 		
@@ -163,37 +143,19 @@ public class LatinSquareTest {
 	@Test
 	public void isLatinSquare_Test2() {
 		
-		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-							{6, 7, 2, 1, 9, 5, 3, 4, 8},
-							{1, 9, 8, 3, 4, 2, 5, 6, 7},
-							{8, 5, 9, 7, 6, 1, 4, 2, 3},
-							{4, 2, 6, 8, 5, 3, 7, 9, 1},
-							{7, 1, 3, 9, 2, 4, 8, 5, 6},
-							{9, 6, 1, 5, 3, 7, 2, 8, 4},
-							{2, 8, 7, 4, 1, 9, 6, 3, 5},
-							{3, 4, 5, 2, 8, 6, 1, 7, 1}};
-		// has 1 in (8,8),. duplicate one's in last row and column
-		LatinSquare LS = new LatinSquare(MySquare);
-		
-		assertFalse(LS.isLatinSquare());
-	}
-	@Test
-	public void isLatinSquare_Test3() {
-		
-		int[][] MySquare = {{5, 3, 4, 6, 7, 8, 9, 1, 2},
-							{6, 7, 2, 1, 9, 5, 3, 4, 8},
-							{1, 9, 8, 3, 4, 2, 5, 6, 7},
-							{8, 5, 9, 7, 6, 1, 4, 2, 3},
-							{4, 2, 6, 8, 5, 3, 7, 9, 1},
-							{7, 1, 3, 9, 2, 4, 8, 5, 6},
-							{9, 6, 1, 5, 3, 7, 2, 8, 4},
-							{2, 8, 7, 4, 1, 9, 6, 3, 5},
-							{3, 4, 5, 2, 8, 6, 1, 7, 10}};
-		// 10 in last row/column but nowhere else
+		int[][] MySquare = { { 1, 2, 3 }, { 3, 1, 2 }, { 4, 5, 6 } };
+
 		LatinSquare LS = new LatinSquare(MySquare);
 		
 		assertFalse(LS.isLatinSquare());
 	}
 	
-
+	@Test
+	public void ePuzzleViolationTest()
+	{
+		for (ePuzzleViolation ePV: ePuzzleViolation.values())
+		{
+			System.out.println(ePV);
+		}
+	}
 }
