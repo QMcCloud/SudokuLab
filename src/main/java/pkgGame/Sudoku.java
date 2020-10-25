@@ -271,6 +271,19 @@ public class Sudoku extends LatinSquare {
 		return regionNbr;
 	}
 	public void PrintPuzzle() {
+		for(int i=0; i<this.iSize; i+=1) {
+			int[] row=this.getRow(i);
+			for(int j=0; j<this.iSize; j+=this.iSqrtSize) {
+				for (int k=0; k<this.iSqrtSize; k+=1) {
+					System.out.print(row[k+j]);	
+				}
+				System.out.print(" ");
+			}
+			System.out.print("\n");
+			if ((i+1)%(this.iSqrtSize)==0) {
+				System.out.print("\n");
+			}
+		}
 		
 		
 	}
