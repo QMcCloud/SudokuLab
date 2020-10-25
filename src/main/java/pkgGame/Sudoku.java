@@ -1,5 +1,10 @@
 package pkgGame;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import pkgEnum.ePuzzleViolation;
 import pkgHelper.LatinSquare;
 import pkgHelper.PuzzleViolation;
@@ -260,4 +265,68 @@ public class Sudoku extends LatinSquare {
 		
 		return true;
 	}
+	public int getRegionNbr(int row,int col) {
+		int regionNbr = 0;
+		regionNbr = (col/iSqrtSize)+((row/iSqrtSize)*iSqrtSize);
+		return regionNbr;
+	}
+	public void PrintPuzzle() {
+		
+		
+	}
+	public void FillDiagonalRegions() {
+		
+		for (int i = 0; i < iSize; i = i + iSqrtSize) {
+			//use get region number for specified region, then call to set region 
+			//tiles (1,2,3,4,...) then randomize with Shuffle.
+			SetRegion(getRegionNbr(i, i));
+			ShuffleRegion(getRegionNbr(i, i));
+		}
+	}
+	
+	public void SetRegion(int regNum) {
+		
+		int i = (regNum / iSqrtSize) * iSqrtSize;
+		int j = (regNum % iSqrtSize) * iSqrtSize;		
+		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
+		int iValue = 1;
+
+		for (; i < iMax; i++) {
+			for (j = (regNum % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				this.getPuzzle()[i][j] = iValue++;
+			}
+		
+		}
+		
+	}
+	public void ShuffleRegion(int regNum) {
+		int[] region = getRegion(regNum);
+		shuffleArray(region);
+		
+		int i = (regNum / iSqrtSize) * iSqrtSize;
+		int j = (regNum % iSqrtSize) * iSqrtSize;		
+		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
+		int iCnt = 0;
+
+		for (; i < iMax; i++) {
+			for (j = (regNum % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				this.getPuzzle()[i][j] = region[iCnt++];
+			}
+		}
+	}
+	public void shuffleArray(int[] unshuffledArray) {
+		//Using Fisher-Yates Randomizer algorithm
+		Random rand = new Random();
+		for (int i = unshuffledArray.length - 1; i > 0; i--) {
+			int randVal = rand.nextInt(i + 1);
+			int newVal = unshuffledArray[randVal];
+			unshuffledArray[randVal] = unshuffledArray[i];			
+			unshuffledArray[i] = newVal;
+			
+		
+		}
+	}
+	
 }
