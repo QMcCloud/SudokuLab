@@ -265,7 +265,7 @@ public class Sudoku extends LatinSquare {
 		
 		return true;
 	}
-	public int getRegionNbr(int row,int col) {
+	public int getRegionNbr(int col,int row) {
 		int regionNbr = 0;
 		regionNbr = (col/iSqrtSize)+((row/iSqrtSize)*iSqrtSize);
 		return regionNbr;
@@ -287,7 +287,7 @@ public class Sudoku extends LatinSquare {
 		
 		
 	}
-	public void FillDiagonalRegions() {
+	private void FillDiagonalRegions() {
 		
 		for (int i = 0; i < iSize; i = i + iSqrtSize) {
 			//use get region number for specified region, then call to set region 
@@ -297,7 +297,7 @@ public class Sudoku extends LatinSquare {
 		}
 	}
 	
-	public void SetRegion(int regNum) {
+	private void SetRegion(int regNum) {
 		
 		int i = (regNum / iSqrtSize) * iSqrtSize;
 		int j = (regNum % iSqrtSize) * iSqrtSize;		
@@ -313,7 +313,7 @@ public class Sudoku extends LatinSquare {
 		}
 		
 	}
-	public void ShuffleRegion(int regNum) {
+	private void ShuffleRegion(int regNum) {
 		int[] region = getRegion(regNum);
 		shuffleArray(region);
 		
@@ -329,7 +329,7 @@ public class Sudoku extends LatinSquare {
 			}
 		}
 	}
-	public void shuffleArray(int[] unshuffledArray) {
+	private void shuffleArray(int[] unshuffledArray) {
 		//Using Fisher-Yates Randomizer algorithm
 		Random rand = new Random();
 		for (int i = unshuffledArray.length - 1; i > 0; i--) {
