@@ -17,25 +17,31 @@ public class LatinSquare {
 	private int[][] LatinSquare;
 
 	/**
+	 * No-arg constructor, make it public, don't do anything in the constructor
+	 * 
+	 * @since Lab #1
+	 */
+
+	/**
 	 * @since Lab #1
 	 */
 	private boolean bIgnoreZero;
 
 	/**
-	 * PV - ArrayList to collect PuzzleViolations 
+	 * PV - ArrayList to collect PuzzleViolations
 	 * 
 	 * @since Lab #2
 	 */
 	private ArrayList<PuzzleViolation> PV = new ArrayList<PuzzleViolation>();
-	
+
 	/**
 	 * No-arg constructor, make it public, don't do anything in the constructor
 	 * 
 	 * @since Lab #1
 	 */
+
 	public LatinSquare() {
-		super();
-		this.bIgnoreZero = false;
+
 	}
 
 	/**
@@ -46,7 +52,6 @@ public class LatinSquare {
 	 */
 
 	public LatinSquare(int[][] puzzle) {
-		this();
 		this.LatinSquare = puzzle;
 	}
 
@@ -74,13 +79,13 @@ public class LatinSquare {
 	/**
 	 * Should the processing ignore zeros (hasDuplicates, etc)
 	 * 
+	 * @since Lab #2	 * 
 	 * @return
-	 * @since Lab #2	   
 	 */
 	public boolean isbIgnoreZero() {
 		return bIgnoreZero;
 	}
-	
+
 	/**
 	 * Should the processing ignore zeros (hasDuplicates, etc)
 	 * 
@@ -90,6 +95,7 @@ public class LatinSquare {
 	protected void setbIgnoreZero(boolean bIgnoreZero) {
 		this.bIgnoreZero = bIgnoreZero;
 	}
+
 
 	/**
 	 * Pass in a one-dimension array, pass back true if there is a duplicate value
@@ -116,7 +122,7 @@ public class LatinSquare {
 		}
 		return hasDuplicates;
 	}
-
+	
 	/**
 	 * @since Lab #2
 	 * If there are any duplicates in any row or any column, return 'true'
@@ -132,11 +138,12 @@ public class LatinSquare {
 		for (int j = 0; j < LatinSquare.length; j++) {
 			if (hasDuplicates(getColumn(j)))
 				AddPuzzleViolation(new PuzzleViolation(ePuzzleViolation.DupCol,j));
+
 		}
 		
 		return (this.PV.size() > 0);
-	}
-	
+	}	
+
 	/**
 	 * Remove any zeros in an array
 	 * @since Lab #2
@@ -149,7 +156,7 @@ public class LatinSquare {
 		
 		return arr;
 	}
-
+	
 	/**
 	 * doesElementExist - pass in one-dimension array and a value, if value exists
 	 * in array... then return true
@@ -263,12 +270,16 @@ public class LatinSquare {
 	public boolean isLatinSquare() {
 
 		boolean isLatinSquare = true;
-		ClearPuzzleViolation();
-		
-		if (hasDuplicates())
-			return false;
-		
-		
+		for (int i = 0; i < LatinSquare.length; i++) {
+			if (hasDuplicates(getRow(i)))
+				return false;
+		}
+
+		for (int j = 0; j < LatinSquare.length; j++) {
+			if (hasDuplicates(getColumn(j)))
+				return false;
+		}
+
 		for (int i = 1; i < LatinSquare.length; i++) {
 
 			if (!hasAllValues(getRow(0), getRow(i))) {
@@ -303,10 +314,10 @@ public class LatinSquare {
 		return false;
 
 	}
-	
-	
+
 	/**
 	 * getPV - Return the collection of PuzzleViolations
+	 * 
 	 * @since Lab #2
 	 * @return
 	 */
@@ -316,21 +327,20 @@ public class LatinSquare {
 
 	/**
 	 * ClearPuzzleViolation - clear the collection of PuzzleViolations
+	 * 
 	 * @since Lab #2
 	 */
-	protected void ClearPuzzleViolation()
-	{
+	protected void ClearPuzzleViolation() {
 		PV.clear();
 	}
-	
+
 	/**
 	 * AddPuzzleViolation - Add a PuzzleViolation to the collection
 	 * 
 	 * @since Lab #2
 	 * @param pv
 	 */
-	protected void AddPuzzleViolation(PuzzleViolation pv)
-	{
+	protected void AddPuzzleViolation(PuzzleViolation pv) {
 		PV.add(pv);
 	}
 }

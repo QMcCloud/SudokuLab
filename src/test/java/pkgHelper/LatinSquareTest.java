@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import pkgEnum.ePuzzleViolation;
 
+
+
+
 public class LatinSquareTest {
 
 	@Test
@@ -35,31 +38,6 @@ public class LatinSquareTest {
 
 	}
 
-	@Test
-	public void hasDuplicates_test3() {
-
-		LatinSquare LS = new LatinSquare();
-		LS.setbIgnoreZero(true);
-		int[] arr = { 1, 3, 0, 2, 0 };
-
-		boolean bHasDuplicates = LS.hasDuplicates(arr);
-
-		assertEquals(bHasDuplicates, false);
-
-	}
-	
-	@Test
-	public void hasDuplicates_test4() {
-
-		LatinSquare LS = new LatinSquare();
-		LS.setbIgnoreZero(true);
-		int[] arr = { 1, 3, 0, 2, 3 };
-
-		boolean bHasDuplicates = LS.hasDuplicates(arr);
-
-		assertEquals(bHasDuplicates, true);
-
-	}
 	@Test
 	public void doesElementExist_Test1() {
 		LatinSquare LS = new LatinSquare();
@@ -148,14 +126,5 @@ public class LatinSquareTest {
 		LatinSquare LS = new LatinSquare(MySquare);
 		
 		assertFalse(LS.isLatinSquare());
-	}
-	
-	@Test
-	public void ePuzzleViolationTest()
-	{
-		for (ePuzzleViolation ePV: ePuzzleViolation.values())
-		{
-			System.out.println(ePV);
-		}
 	}
 }
