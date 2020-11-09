@@ -398,7 +398,7 @@ public class Sudoku extends LatinSquare {
 			for (int iCol = 0; iCol < iSize; iCol++) {
 				Cell cell = new Cell(iRow, iCol); // creates instance of cell
 				cell.setlstValidValues(getAllValidCellValues(iCol, iRow)); // finds all valid values and se them
-				// cell.ShuffleValidValues(); // shuffles values with shuffle method from cell
+				cell.ShuffleValidValues(); // shuffles values with shuffle method from cell
 				// hidden class
 				puzzleMap.put(cell.hashCode(), cell); // (sets location key of cell as a hash(row,col), value)
 			}
