@@ -25,6 +25,16 @@ public class SudokuTest {
 
 		try {
 			Sudoku s1 = new Sudoku(9);
+			
+			PrintStars();
+			
+			System.out.println("Testing method: " + Thread.currentThread().getStackTrace()[1].getMethodName());
+			System.out.println("Puzzle:");
+			s1.PrintPuzzle();
+			assertTrue(s1.isSudoku());
+			
+			
+			PrintStars();
 		} catch (Exception e) {
 			fail("Test failed to build a Sudoku");
 		}
