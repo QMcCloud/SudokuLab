@@ -3,10 +3,10 @@ package pkgGame;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
-
 import pkgHelper.LatinSquare;
 
 /**
@@ -19,6 +19,7 @@ import pkgHelper.LatinSquare;
  */
 public class Sudoku extends LatinSquare {
 
+	private HashMap<Integer, Cell> puzzleMap = new HashMap<Integer, Cell>();
 	/**
 	 * 
 	 * iSize - the length of the width/height of the Sudoku puzzle.
@@ -62,9 +63,9 @@ public class Sudoku extends LatinSquare {
 		FillDiagonalRegions();
 		
 		//FIXME
-		
+		//This should build the rest of the sudoku
 		SetCells();
-		fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
+		fillRemaining(this.puzzleMap.get(Objects.hash(0, iSqrtSize)));
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class Sudoku extends LatinSquare {
 	 * @since Lab #2
 	 * @param puzzle - given (working) Sudoku puzzle. Use for testing
 	 * @throws Exception will be thrown if the length of the puzzle do not have a
-	 *                   whole number square root
+	 *                    whole number square root
 	 */
 	public Sudoku(int[][] puzzle) throws Exception {
 		super(puzzle);
@@ -392,21 +393,45 @@ public class Sudoku extends LatinSquare {
 
 	private void SetCells() {
 		// FIXME
+		//Steps into Cell
+		for (int iRow = 0; iRow <iSize; iRow++)
+			for (int iCol = 0; iCol <iSize; iCol++) {
+				Cell cell = new Cell(iRow,iCol); //creates instance of cell
+				cell.setlstValidValues(getAllValidCellValues(iCol,iRow)); //finds all valid values and se them
+				cell.ShuffleValidValues();    //shuffles values with shuffle method from cell hidden class
+		puzzleMap.put(cell.hashCode(), cell); // (sets location key of cell as a hash(row,col), value)
+			}
 	}
 
-	public boolean isValidValue(Cell c, int num) {
+	public boolean isValidValue(Cell cell, int val) {
+		return isValidValue(cell.getiRow(),cell.getiCol(), val); // calls other method isValidMethod with getters in cell hidden class
 		// FIXME
-		return false;
+
 	}
 
-	private HashSet<Integer> getAllValidCellValues(int num, int num2) {
+	private HashSet<Integer> getAllValidCellValues(int iRow, int iCol) {
+		HashSet<Integer> potValues = new HashSet <Integer>();
+		for (int i =1; i < iSize; i++) { //loops to check validity of value in cell of values from 1 to the size of sudoku
+			if (isValidValue(iRow,iCol,i)) { 
+				potValues.add(i);	//adds value to potential value to hashset
+				}
+			}
+		return potValues;
 		// FIXME
-		return null;
+		//Prof used collection in walkthrough video, maybe check try something with collections to get values ?...
+		//...But isValidValues is already a working method to find potential Values.
 	}
 
-	private void ShowAvailableValues() {
-		// FIXME
-		// helper method
+	@SuppressWarnings("unused")
+	private void ShowAvailableValues() { 		// helper method to see values for debugging
+		for (int iRow= 0;iRow<iSize; iRow++) {	//steps through 
+			for( int iCol=0;iCol<iSize; iCol++) {
+				
+				Cell cell = puzzleMap.get(Objects.hash(iRow,iCol)); //fetches cell with location key stored in hashcode
+				for (Integer i: cell.getLstValidValues()) {System.out.println(i+" ");} //Prints potential values in for each loop
+				System.out.println(" ");
+			}
+		}
 	}
 
 	private boolean fillRemaining(Cell c) {
@@ -496,7 +521,8 @@ public class Sudoku extends LatinSquare {
 		 * @return
 		 */
 		public Cell GetNextCell(Cell c) {
-
+			//Given by Prof in Walkthrough
+			
 			int iCol = c.getiCol() + 1;
 			int iRow = c.getiRow();
 			int iSqrtSize = (int) Math.sqrt(iSize);
@@ -523,7 +549,7 @@ public class Sudoku extends LatinSquare {
 				}
 			}
 
-			return (Cell) cells.get(Objects.hash(iRow, iCol));
+			return (Cell) puzzleMap.get(Objects.hash(iRow, iCol));
 
 		}
 	}
