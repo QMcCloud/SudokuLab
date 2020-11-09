@@ -139,8 +139,27 @@ public class SudokuTest {
 
 	}
 
-
-
+	@Test
+	public void Sudoku_Partial_1() {
+		try {
+			Sudoku s = new Sudoku(9);
+			s.PrintPuzzle();
+		}
+		catch (Exception e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void Sudoku_Partial_2() {
+		try {
+			Sudoku s = new Sudoku(9);
+			s.PrintPuzzle();
+		}
+		catch (Exception e){
+			fail();
+		}
+	}
 
 
 }
