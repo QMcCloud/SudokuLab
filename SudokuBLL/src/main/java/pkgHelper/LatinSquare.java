@@ -9,13 +9,13 @@ import pkgEnum.ePuzzleViolation;
 
 public class LatinSquare {
 
-	/**
+	/*
 	 * LatinSquare - two dimensional array that's the core of the puzzle
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
 	 */
-	private int[][] LatinSquare;
+	protected int[][] LatinSquare;
 
 	/**
 	 * No-arg constructor, make it public, don't do anything in the constructor
@@ -327,16 +327,19 @@ public class LatinSquare {
 	 * @return - returns 'true' if any element in the LatinSquare is a zero
 	 */
 	public boolean ContainsZero() {
+		return CountZero() !=  0;
+	}
+	public int CountZero() {
+		int z = 0 ;
 		for (int i = 0; i < LatinSquare.length; i++) {
 			for (int j = 0; j < LatinSquare.length; j++) {
 				if (LatinSquare[i][j] == 0) {
-					return true;
+					z++;
+					}
 				}
 			}
+		return z;
 		}
-		return false;
-
-	}
 
 	/**
 	 * getPV - Return the collection of PuzzleViolations

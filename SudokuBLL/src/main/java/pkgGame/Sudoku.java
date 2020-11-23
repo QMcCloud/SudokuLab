@@ -89,15 +89,14 @@ public class Sudoku extends LatinSquare implements Serializable {
 
 		int[][] puzzle = new int[iSize][iSize];
 		super.setLatinSquare(puzzle);
-		
+
 		boolean bFillRemaining = false;
-		do
-		{
-	
-		FillDiagonalRegions();
-		SetCells();
-		bFillRemaining= fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
-		}while (!bFillRemaining);
+		do {
+
+			FillDiagonalRegions();
+			SetCells();
+			bFillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
+		} while (!bFillRemaining);
 	}
 
 	/**
@@ -150,16 +149,30 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @since Lab #5
 	 */
 	private void RemoveCells() {
-		SetRemaingCells();
-
-		do {
+		double pctRemoved = 0;
+		double pctToRemove = 0;
+		
+		
+		for(int r=0 ;r < iSize; r++ )
+			do {
+				{
+		
+			int colMin = (r % iSqrtSize) * iSqrtSize;
+			int rowMin = (r / iSqrtSize) * iSqrtSize;
+			int colMax = colMin + iSqrtSize;
+			int rowMax = rowMin + iSqrtSize;
+			
 			Random rand = new SecureRandom();
-			int iRandomRow = rand.nextInt(this.iSize);
-			int iRandomCol = rand.nextInt(this.iSize);
+			int iRandomRow =rand.nextInt(rowMax-rowMin)+rowMin;
+			int iRandomCol =rand.nextInt(colMax-colMin)+colMin;
+		
 			this.getPuzzle()[iRandomRow][iRandomCol] = 0;
-			SetRemaingCells();
-		} while (!IsDifficultyMet(PossibleValuesMultiplier(this.cells)));
-
+			int iZeroCnt = this.CountZero(r);
+			pctRemoved= (double)iZeroCnt/(this.iSize);
+			pctToRemove = this.eGameDifficulty.getiDifficulty();
+				}	
+		}while (pctRemoved <pctToRemove);
+			
 	}
 
 	/**
@@ -813,6 +826,16 @@ public class Sudoku extends LatinSquare implements Serializable {
 			return true;
 		else
 			return false;
+	}
+
+	public int CountZero(int iRegion) {
+		int z = 0;
+		var rgn = this.getRegion(iRegion);
+		for (int i : rgn) {
+			if (i == 0)
+				z++;
+		}
+		return z;
 	}
 
 	/**
