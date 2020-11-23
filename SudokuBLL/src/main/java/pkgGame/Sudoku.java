@@ -89,13 +89,15 @@ public class Sudoku extends LatinSquare implements Serializable {
 
 		int[][] puzzle = new int[iSize][iSize];
 		super.setLatinSquare(puzzle);
-
+		
+		boolean bFillRemaining = false;
+		do
+		{
+	
 		FillDiagonalRegions();
 		SetCells();
-		fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
-		//FIXME - Fix this code
-		//RemoveCells();
-
+		bFillRemaining= fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
+		}while (!bFillRemaining);
 	}
 
 	/**
