@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Stack;
+
 import pkgEnum.*;
 import pkgEnum.ePuzzleViolation;
 import pkgHelper.LatinSquare;
@@ -26,6 +28,87 @@ import pkgHelper.PuzzleViolation;
  *
  */
 public class Sudoku extends LatinSquare implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Stack<Cell> stkUndo = new Stack<Cell>();
+	private Stack<Cell> stkRedo = new Stack<Cell>();
+
+	/**
+	 * bUndo - Returns 'true' if there is an item to Undo
+	 * 
+	 * @version 1.6
+	 * @since Lab #6
+	 * @return - boolean, if Undo is available
+	 */
+	public boolean bUndo()
+	{
+		return stkUndo.size() > 0;
+	}
+
+	/**
+	 * bRedo - Returns 'true' if there is an item to Redo
+	 * 
+	 * @version 1.6
+	 * @since Lab #6
+	 * 
+	 * @return - boolean, if Redo is available
+	 */	
+	public boolean bRedo()
+	{
+		return stkRedo.size() > 0;
+	}
+	
+	/**
+	 * MakeMove - Capture a move made, capture the Cell, clear the Redo stack
+	 * 
+	 * @version 1.6
+	 * @since Lab #6
+	 * @param c - Pass in the Cell move
+	 */
+	public void MakeMove(Cell c) {
+		//TODO: Push the 'c' to the Undo Stack
+		//TODO: Clear the Redo Stack
+	}
+	
+
+	/**
+	 * Undo - Pop a value from the stkUndo stack, return it.  Set that cell's value 
+	 * to zero in the puzzle
+	 * 
+	 * @version 1.6
+	 * @since Lab #6
+	 * @return - Return the last move
+	 */
+	public Cell Undo() {
+		Cell c = null;
+		if (stkUndo.size() == 0)
+			return null;
+
+		//TODO: 'Undo' the previous move.  
+		// Pop the value from the 'Undo' stack
+		// Push the value to the 'Redo' stack
+		// Return the Cell that you popped from the Undo Stack
+		
+		return c;
+	}
+	/**
+	 * Redo - Pop a value from the stkRedo stack, return it.  Fix the cell value in
+	 * the puzzle
+	 * 
+	 * @version 1.6
+	 * @since Lab #6
+	 * @return Cell - the Cell from the stkRedo Stack
+	 */
+
+	public Cell Redo() {
+		Cell c = null;
+		if (stkRedo.size() == 0)
+			return null;
+		//TODO: 'Redo' the previous move.
+		//	Pop the value from the Redo stack.  Set the value in the puzzle,
+		//	return it.
+		return c;
+	}
 
 	/**
 	 * 
@@ -75,7 +158,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @param iSize- length of the width/height of the puzzle
 	 * @throws Exception if the iSize given doesn't have a whole number square root
 	 */
-	public Sudoku(int iSize) throws Exception {
+	private Sudoku(int iSize) throws Exception {
 
 		this();
 		this.iSize = iSize;
@@ -90,13 +173,14 @@ public class Sudoku extends LatinSquare implements Serializable {
 		int[][] puzzle = new int[iSize][iSize];
 		super.setLatinSquare(puzzle);
 
-		boolean bFillRemaining = false;
-		do {
-
+ 		boolean bfillRemaining = false;
+		do
+		{
 			FillDiagonalRegions();
 			SetCells();
-			bFillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
-		} while (!bFillRemaining);
+			bfillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
+			
+		} while (!bfillRemaining) ;
 	}
 
 	/**
@@ -112,7 +196,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	public Sudoku(int iSize, eGameDifficulty eGD) throws Exception {
 		this(iSize);
 		this.eGameDifficulty = eGD;
-		RemoveCells();
+		 RemoveCells();
 	}
 
 	/**
@@ -134,45 +218,18 @@ public class Sudoku extends LatinSquare implements Serializable {
 		} else {
 			throw new Exception("Invalid size");
 		}
+		
+		
+ 		boolean bfillRemaining = false;
+
+			SetCells();
+			bfillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
+			
 
 	}
 
 	public int getiSqrtSize() {
 		return iSqrtSize;
-	}
-
-	/**
-	 * RemoveCells - this method will remove cells (set them to zero) until the
-	 * game's difficulty is met
-	 * 
-	 * @version 1.5
-	 * @since Lab #5
-	 */
-	private void RemoveCells() {
-		double pctRemoved = 0;
-		double pctToRemove = 0;
-		
-		
-		for(int r=0 ;r < iSize; r++ )
-			do {
-				{
-		
-			int colMin = (r % iSqrtSize) * iSqrtSize;
-			int rowMin = (r / iSqrtSize) * iSqrtSize;
-			int colMax = colMin + iSqrtSize;
-			int rowMax = rowMin + iSqrtSize;
-			
-			Random rand = new SecureRandom();
-			int iRandomRow =rand.nextInt(rowMax-rowMin)+rowMin;
-			int iRandomCol =rand.nextInt(colMax-colMin)+colMin;
-		
-			this.getPuzzle()[iRandomRow][iRandomCol] = 0;
-			int iZeroCnt = this.CountZero(r);
-			pctRemoved= (double)iZeroCnt/(this.iSize);
-			pctToRemove = this.eGameDifficulty.getiDifficulty();
-				}	
-		}while (pctRemoved <pctToRemove);
-			
 	}
 
 	/**
@@ -191,7 +248,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 
 		if (eActualGameDifficulty == null)
 			return false;
-		if (eActualGameDifficulty.getiDifficulty() >= this.eGameDifficulty.getiDifficulty())
+		if (eActualGameDifficulty.getdDifficulty() >= this.eGameDifficulty.getdDifficulty())
 			return true;
 
 		return false;
@@ -347,8 +404,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 */
 	@Override
 	protected boolean hasDuplicates() {
-		if (super.hasDuplicates())
-			return true;
+		super.hasDuplicates();
 
 		for (int k = 0; k < this.getPuzzle().length; k++) {
 			if (super.hasDuplicates(getRegion(k))) {
@@ -379,7 +435,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * 
 	 * @return - return region number based on given column and row
 	 */
-	private int getRegionNbr(int iCol, int iRow) {
+	public int getRegionNbr(int iCol, int iRow) {
 
 		int i = (iCol / iSqrtSize) + ((iRow / iSqrtSize) * iSqrtSize);
 
@@ -405,6 +461,9 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @param iRow given row
 	 * @return - returns a one-dimensional array from a given region of the puzzle
 	 */
+	
+
+	
 	int[] getRegion(int iCol, int iRow) {
 
 		int i = (iCol / iSqrtSize) + ((iRow / iSqrtSize) * iSqrtSize);
@@ -828,16 +887,6 @@ public class Sudoku extends LatinSquare implements Serializable {
 			return false;
 	}
 
-	public int CountZero(int iRegion) {
-		int z = 0;
-		var rgn = this.getRegion(iRegion);
-		for (int i : rgn) {
-			if (i == 0)
-				z++;
-		}
-		return z;
-	}
-
 	/**
 	 * bRegionCol - return True if it's the last column in the region
 	 * 
@@ -980,4 +1029,50 @@ public class Sudoku extends LatinSquare implements Serializable {
 		}
 
 	}
+
+	/**
+	 * RemoveCells - this method will remove cells (set them to zero) until the
+	 * game's difficulty is met
+	 * 
+	 * @version 1.5
+	 * @since Lab #5
+	 */
+	private void RemoveCells() {
+
+		double pctRemoved = 0;
+		double pctToRemove = 0;
+
+		for (int r = 0; r < iSize; r++)
+			do {
+				{
+					int colMin = (r % iSqrtSize) * iSqrtSize;
+					int rowMin = (r / iSqrtSize) * iSqrtSize;
+					int colMax = colMin + iSqrtSize;
+					int rowMax = rowMin + iSqrtSize;
+
+					Random rand = new SecureRandom();
+					int iRandomRow = rand.nextInt(rowMax - rowMin) + rowMin;
+					int iRandomCol = rand.nextInt(colMax - colMin) + colMin;
+
+					this.getPuzzle()[iRandomRow][iRandomCol] = 0;
+					int iZeroCnt = this.CountZero(r);
+					pctToRemove = this.eGameDifficulty.getdDifficulty();
+					pctRemoved = (double) iZeroCnt / (this.iSize);
+				}
+			} while (pctRemoved < pctToRemove);
+
+	}
+
+	public int CountZero(int iRegion) {
+		int iCnt = 0;
+
+		var rgn = this.getRegion(iRegion);
+		
+		for (int i : rgn) {
+			if (i == 0)
+				iCnt++;
+		}
+		return iCnt;
+	}
+
 }

@@ -9,13 +9,13 @@ import pkgEnum.ePuzzleViolation;
 
 public class LatinSquare {
 
-	/*
+	/**
 	 * LatinSquare - two dimensional array that's the core of the puzzle
 	 * 
 	 * @version 1.1
 	 * @since Lab #1
 	 */
-	protected int[][] LatinSquare;
+	private int[][] LatinSquare;
 
 	/**
 	 * No-arg constructor, make it public, don't do anything in the constructor
@@ -319,6 +319,19 @@ public class LatinSquare {
 		return isLatinSquare;
 	}
 
+	public int CountZero() {
+		int iCnt = 0;
+		
+		for (int i = 0; i < LatinSquare.length; i++) {
+			for (int j = 0; j < LatinSquare.length; j++) {
+				if (LatinSquare[i][j] == 0) {
+					iCnt++;
+				}
+			}
+		}
+		return iCnt;
+	}
+	
 	/**
 	 * ContainsZero - return 'true' if any element in the LatinSquare is a zero
 	 * 
@@ -327,19 +340,12 @@ public class LatinSquare {
 	 * @return - returns 'true' if any element in the LatinSquare is a zero
 	 */
 	public boolean ContainsZero() {
-		return CountZero() !=  0;
+		
+		return this.CountZero() > 0;
+
 	}
-	public int CountZero() {
-		int z = 0 ;
-		for (int i = 0; i < LatinSquare.length; i++) {
-			for (int j = 0; j < LatinSquare.length; j++) {
-				if (LatinSquare[i][j] == 0) {
-					z++;
-					}
-				}
-			}
-		return z;
-		}
+	
+	
 
 	/**
 	 * getPV - Return the collection of PuzzleViolations
@@ -348,7 +354,7 @@ public class LatinSquare {
 	 * @since Lab #2A
 	 * @return
 	 */
-	protected ArrayList<PuzzleViolation> getPV() {
+	public ArrayList<PuzzleViolation> getPV() {
 		return PV;
 	}
 

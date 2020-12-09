@@ -16,111 +16,40 @@ public class SudokuPrivateMethodsTest {
 		System.out.println();
 	}
 
-	@Test
-	public void Sudoku_Test_Size9() {
+	
+	public static Sudoku CreateSudokuWithSize(int iSize) throws Exception {
+
 		Sudoku s1 = null;
-		int iPuzzleSize = 9;
 
 		try {
 			Class<?> c = Class.forName("pkgGame.Sudoku");
-			Constructor constructor = c.getConstructor(new Class[] { int.class });
+			Constructor constructor = c.getDeclaredConstructor(new Class[] { int.class });
 			constructor.setAccessible(true);
+			s1 = (Sudoku) constructor.newInstance(iSize);
 
-			PrintStars();
-			System.out.println("Testing method: " + Thread.currentThread().getStackTrace()[1].getMethodName());
-
-			try {
-				s1 = (Sudoku) constructor.newInstance(iPuzzleSize);
-			} catch (Exception e) {
-				fail("Test failed to build a Sudoku");
-			}
-
-			PrintStars();
 
 		} catch (ClassNotFoundException e1) {
 			fail("ClassNotFoundException");
 		} catch (NoSuchMethodException e) {
 			fail("NoSuchMethodException");
 		} catch (SecurityException e) {
+
 			fail("SecurityException");
+		} catch (InstantiationException e) {
+			fail("InstantiationException");
+		} catch (IllegalAccessException e) {
+			fail("IllegalAccessException");
 		} catch (IllegalArgumentException e) {
 			fail("IllegalArgumentException");
+		} catch (InvocationTargetException e) {
+			throw new Exception(e.getMessage());
 		}
 
-		PrintStars();
+		return s1;
 
 	}
-
-	@Test
-	public void Sudoku_Test_Size10() {
-
-		int iPuzzleSize = 10;
-
-		try {
-			Class<?> c = Class.forName("pkgGame.Sudoku");
-			Constructor constructor = c.getConstructor(new Class[] { int.class });
-			constructor.setAccessible(true);
-
-			PrintStars();
-			System.out.println("Testing method: " + Thread.currentThread().getStackTrace()[1].getMethodName());
-
-			Assertions.assertThrows(Exception.class, () -> {
-				Sudoku s1 = (Sudoku) constructor.newInstance(iPuzzleSize);
-			});
-
-			PrintStars();
-
-		} catch (ClassNotFoundException e1) {
-			fail("ClassNotFoundException");
-		} catch (NoSuchMethodException e) {
-			fail("NoSuchMethodException");
-		} catch (SecurityException e) {
-			fail("SecurityException");
-		} catch (IllegalArgumentException e) {
-			fail("IllegalArgumentException");
-		}
-
-		PrintStars();
-
-	}
-
-	@Test
-	public void Sudoku_FullPuzzle_1() {
-		Sudoku s1 = null;
-		int iPuzzleSize = 9;
-
-		try {
-			Class<?> c = Class.forName("pkgGame.Sudoku");
-			Constructor constructor = c.getConstructor(new Class[] { int.class });
-			constructor.setAccessible(true);
-
-			PrintStars();
-			System.out.println("Testing method: " + Thread.currentThread().getStackTrace()[1].getMethodName());
-
-			try {
-				s1 = (Sudoku) constructor.newInstance(iPuzzleSize);
-				s1.PrintPuzzle();
-				assertTrue(s1.isSudoku());
-			} catch (Exception e) {
-				fail("Test failed to build a Sudoku");
-			}
-
-			PrintStars();
-
-		} catch (ClassNotFoundException e1) {
-			fail("ClassNotFoundException");
-		} catch (NoSuchMethodException e) {
-			fail("NoSuchMethodException");
-		} catch (SecurityException e) {
-			fail("SecurityException");
-		} catch (IllegalArgumentException e) {
-			fail("IllegalArgumentException");
-		}
-
-		PrintStars();
-
-	}
-
+	
+	
 	@Test
 	public void Sudoku_Test_SetRegion() {
 
@@ -134,7 +63,7 @@ public class SudokuPrivateMethodsTest {
 
 		try {
 			Class<?> c = Class.forName("pkgGame.Sudoku");
-			Constructor constructor = c.getConstructor(new Class[] { int.class });
+			Constructor constructor = c.getDeclaredConstructor(new Class[] { int.class });
 			constructor.setAccessible(true);
 			s1 = (Sudoku) constructor.newInstance(iPuzzleSize);
 
@@ -164,6 +93,7 @@ public class SudokuPrivateMethodsTest {
 		} catch (NoSuchMethodException e) {
 			fail("NoSuchMethodException");
 		} catch (SecurityException e) {
+
 			fail("SecurityException");
 		} catch (InstantiationException e) {
 			fail("InstantiationException");
@@ -181,13 +111,13 @@ public class SudokuPrivateMethodsTest {
 
 	@Test
 	public void FillDiagonalRegions() {
-
+		
 		Sudoku s1 = null;
 		int iPuzzleSize = 9;
-
+		
 		try {
 			Class<?> c = Class.forName("pkgGame.Sudoku");
-			Constructor constructor = c.getConstructor(new Class[] { int.class });
+			Constructor constructor = c.getDeclaredConstructor(new Class[] { int.class });
 			constructor.setAccessible(true);
 			s1 = (Sudoku) constructor.newInstance(iPuzzleSize);
 
@@ -214,6 +144,7 @@ public class SudokuPrivateMethodsTest {
 		} catch (NoSuchMethodException e) {
 			fail("NoSuchMethodException");
 		} catch (SecurityException e) {
+
 			fail("SecurityException");
 		} catch (InstantiationException e) {
 			fail("InstantiationException");

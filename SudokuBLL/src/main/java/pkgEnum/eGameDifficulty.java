@@ -6,24 +6,24 @@ import java.util.Map;
 
 public enum eGameDifficulty {
 
-	EASY(.5), MEDIUM(.7), HARD(.85);
+	EASY(0.10), MEDIUM(0.25), HARD(0.50);
 
-	private final double iDifficulty;
+	private final Double dDifficulty;
 
 	private static final Map<Double, eGameDifficulty> lookup = new HashMap<Double, eGameDifficulty>();
 
 	static {
 		for (eGameDifficulty d : eGameDifficulty.values()) {
-			lookup.put(d.getiDifficulty(), d);
+			lookup.put(d.getdDifficulty(), d);
 		}
 	}
 
-	private eGameDifficulty(double d) {
-		this.iDifficulty = d;
+	private eGameDifficulty(Double dDifficulty) {
+		this.dDifficulty = dDifficulty;
 	}
 
-	public double getiDifficulty() {
-		return iDifficulty;
+	public Double getdDifficulty() {
+		return dDifficulty;
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public enum eGameDifficulty {
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
 			eGameDifficulty enumDifficulty = (eGameDifficulty) pair.getValue();
-			double iDifficultyValue = (double) pair.getKey();
+			int iDifficultyValue = (int) pair.getKey();
 			if (iDifficulty > iDifficultyValue) {
 				eGD = enumDifficulty;
 			}
