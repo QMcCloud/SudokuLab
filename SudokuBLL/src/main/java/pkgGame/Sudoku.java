@@ -40,8 +40,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @since Lab #6
 	 * @return - boolean, if Undo is available
 	 */
-	public boolean bUndo()
-	{
+	public boolean bUndo() {
 		return stkUndo.size() > 0;
 	}
 
@@ -52,12 +51,11 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @since Lab #6
 	 * 
 	 * @return - boolean, if Redo is available
-	 */	
-	public boolean bRedo()
-	{
+	 */
+	public boolean bRedo() {
 		return stkRedo.size() > 0;
 	}
-	
+
 	/**
 	 * MakeMove - Capture a move made, capture the Cell, clear the Redo stack
 	 * 
@@ -66,15 +64,14 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @param c - Pass in the Cell move
 	 */
 	public void MakeMove(Cell c) {
-		
+
 		stkUndo.push(c);
 		stkRedo.clear();
-		//XXX: Push the 'c' to the Undo Stack & Clear Redo stk. (Right?)
+		// XXX: Push the 'c' to the Undo Stack & Clear Redo stk. (Right?)
 	}
-	
 
 	/**
-	 * Undo - Pop a value from the stkUndo stack, return it.  Set that cell's value 
+	 * Undo - Pop a value from the stkUndo stack, return it. Set that cell's value
 	 * to zero in the puzzle
 	 * 
 	 * @version 1.6
@@ -82,21 +79,22 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @return - Return the last move
 	 */
 	public Cell Undo() {
-		
+
 		if (stkUndo.size() == 0)
 			return null;
 		Cell c = stkUndo.pop();
-		stkRedo.push(new Cell(c.getiRow(),c.getiCol(),c.getiCellValue()) );
-		this.getPuzzle()[c.getiRow()][c.getiCol()]= 0;
-		//XXX: 'Undo' the previous move.  (Right?)
+		stkRedo.push(new Cell(c.getiRow(), c.getiCol(), c.getiCellValue()));
+		this.getPuzzle()[c.getiRow()][c.getiCol()] = 0;
+		// XXX: 'Undo' the previous move. (Right?)
 		// Pop the value from the 'Undo' stack
 		// Push the value to the 'Redo' stack
 		// Return the Cell that you popped from the Undo Stack
-		
+
 		return c;
 	}
+
 	/**
-	 * Redo - Pop a value from the stkRedo stack, return it.  Fix the cell value in
+	 * Redo - Pop a value from the stkRedo stack, return it. Fix the cell value in
 	 * the puzzle
 	 * 
 	 * @version 1.6
@@ -105,15 +103,16 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 */
 
 	public Cell Redo() {
-		
+
 		if (stkRedo.size() == 0)
 			return null;
 		Cell c = stkRedo.pop();
-		this.getPuzzle()[c.getiRow()][c.getiCol()]= c.getiCellValue();
-		//XXX: 'Redo' the previous move. (Is this Right?)
+		this.getPuzzle()[c.getiRow()][c.getiCol()] = c.getiCellValue();
+		stkUndo.push(c);
+		// XXX: 'Redo' the previous move. (Is this Right?)
 
-		//	Pop the value from the Redo stack.  Set the value in the puzzle,
-		//	return it.
+		// Pop the value from the Redo stack. Set the value in the puzzle,
+		// return it.
 		return c;
 	}
 
@@ -139,6 +138,16 @@ public class Sudoku extends LatinSquare implements Serializable {
 	private HashMap<Integer, SudokuCell> cells = new HashMap<Integer, SudokuCell>();
 
 	private eGameDifficulty eGameDifficulty;
+
+	private int iNumMistake = 0;
+
+	public void AddMistake(int i) {
+		iNumMistake += i;
+	}
+
+	public int getNumMistake() {
+		return iNumMistake;
+	}
 
 	/**
 	 * Sudoku - No-arg private constructor should set the eGameDifficulty to EASY by
@@ -180,14 +189,13 @@ public class Sudoku extends LatinSquare implements Serializable {
 		int[][] puzzle = new int[iSize][iSize];
 		super.setLatinSquare(puzzle);
 
- 		boolean bfillRemaining = false;
-		do
-		{
+		boolean bfillRemaining = false;
+		do {
 			FillDiagonalRegions();
 			SetCells();
 			bfillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
-			
-		} while (!bfillRemaining) ;
+
+		} while (!bfillRemaining);
 	}
 
 	/**
@@ -203,7 +211,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	public Sudoku(int iSize, eGameDifficulty eGD) throws Exception {
 		this(iSize);
 		this.eGameDifficulty = eGD;
-		 RemoveCells();
+		RemoveCells();
 	}
 
 	/**
@@ -225,13 +233,11 @@ public class Sudoku extends LatinSquare implements Serializable {
 		} else {
 			throw new Exception("Invalid size");
 		}
-		
-		
- 		boolean bfillRemaining = false;
 
-			SetCells();
-			bfillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
-			
+		boolean bfillRemaining = false;
+
+		SetCells();
+		bfillRemaining = fillRemaining(this.cells.get(Objects.hash(0, iSqrtSize)));
 
 	}
 
@@ -468,9 +474,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @param iRow given row
 	 * @return - returns a one-dimensional array from a given region of the puzzle
 	 */
-	
 
-	
 	int[] getRegion(int iCol, int iRow) {
 
 		int i = (iCol / iSqrtSize) + ((iRow / iSqrtSize) * iSqrtSize);
@@ -1074,7 +1078,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 		int iCnt = 0;
 
 		var rgn = this.getRegion(iRegion);
-		
+
 		for (int i : rgn) {
 			if (i == 0)
 				iCnt++;
