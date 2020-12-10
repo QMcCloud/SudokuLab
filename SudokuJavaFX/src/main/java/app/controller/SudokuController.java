@@ -21,6 +21,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -467,6 +469,7 @@ public class SudokuController {
 
 							s.MakeMove(CellTo);
 							SetUndoRedo();
+							
 							if (!s.isValidValue(CellTo.getiRow(), CellTo.getiCol(), CellFrom.getiCellValue())) {
 								if (game.getShowHints()) {
 									// If you're here, there's a mistake
@@ -480,6 +483,7 @@ public class SudokuController {
 									;
 								}
 							}
+							
 
 							// This is the code that is actually taking the cell value from the drag-from
 							// cell and dropping a new Image into the dragged-to cell
@@ -500,6 +504,9 @@ public class SudokuController {
 
 				gridPaneSudoku.add(paneTarget, iCol, iRow); // Add the pane to the grid
 			}
+		}
+		if(s.isSudoku()) {
+			Victory();
 		}
 		return gridPaneSudoku;
 	}
@@ -579,5 +586,17 @@ public class SudokuController {
 	private Image GetImage(int iValue) {
 		Image img = new Image(getClass().getResource("/img/" + iValue + ".png").toString());
 		return img;
+	}
+	
+	private boolean Victory() {
+		Sudoku s = this.game.getSudoku();
+		if (s.isSudoku()) {
+			Alert victory = new Alert(AlertType.INFORMATION);
+			victory.setHeaderText("CONGRATULATIONS!");
+			victory.setContentText("You solved the puzzle!");
+			victory.showAndWait();
+			return true;
+		}
+		return false;
 	}
 }
