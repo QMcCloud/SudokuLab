@@ -82,13 +82,13 @@ public class SudokuController   {
 	private void SetUndoRedo() {
 		if (this.game != null) {
 			
-			btnUndo.setDisable(true);
-			
-			
-			//TODO: Set btnUndo.setDisable(bool) based on whether or not there's something to undo
-			//TODO: Set btnRedo.setDisable(bool) based on whether or not there's something to undo			
+			btnUndo.setDisable(!this.game.getSudoku().bUndo());
+			btnRedo.setDisable(!this.game.getSudoku().bRedo());
+		}	
+			//XXX: Set btnUndo.setDisable(bool) based on whether or not there's something to undo (Right?)
+			//XXX: Set btnRedo.setDisable(bool) based on whether or not there's something to undo	(Right?)
 		}
-	}
+	
 
 	/**
 	 * PaintCell - Paint the cell in the puzzle using data from the incoming Cell instance
@@ -153,10 +153,8 @@ public class SudokuController   {
 	
 	@FXML
 	private void btnUndo_Click(ActionEvent event) {
-		Cell c = null;
-		//TODO: Undo the last move
-
-		c.setiCellValue(0);		
+		Cell c = this.game.getSudoku().Undo();
+		//XXX: Undo the last move (Right)	
 		//	You'll have to 'PaintCell' based on the Cell returned in the mathod above
 		PaintCell(c);
 	}
@@ -169,8 +167,8 @@ public class SudokuController   {
 	 */
 	@FXML
 	private void btnRedo_Click(ActionEvent event) {
-		Cell c = null;
-		//TODO: Redo the last Undo move
+		Cell c = this.game.getSudoku().Redo();
+		// XXX: (Right?)
 		PaintCell(c);
 	}	
 	
