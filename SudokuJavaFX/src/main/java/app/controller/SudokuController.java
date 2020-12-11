@@ -474,7 +474,7 @@ public class SudokuController {
 								if (game.getShowHints()) {
 									// If you're here, there's a mistake
 									s.AddMistake(1);
-									if (s.getNumMistake() >= (int) (1 / eGD.getdDifficulty())) {
+									if (s.getNumMistake() >= eGD.getmMistakes()) {
 										// Start New Game
 										CreateSudokuInstance();
 										BuildGrids();
