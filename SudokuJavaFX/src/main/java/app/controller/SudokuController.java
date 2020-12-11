@@ -479,6 +479,7 @@ public class SudokuController {
 										CreateSudokuInstance();
 										BuildGrids();
 										SetUndoRedo();
+										
 									}
 									;
 								}
@@ -498,16 +499,16 @@ public class SudokuController {
 							success = true;
 						}
 						event.setDropCompleted(success);
+						Victory();
 						event.consume();
 					}
 				});
 
 				gridPaneSudoku.add(paneTarget, iCol, iRow); // Add the pane to the grid
+				Victory();
 			}
 		}
-		if(s.isSudoku()) {
-			Victory();
-		}
+		Victory();
 		return gridPaneSudoku;
 	}
 
@@ -588,15 +589,15 @@ public class SudokuController {
 		return img;
 	}
 	
-	private boolean Victory() {
+	private void Victory() {
 		Sudoku s = this.game.getSudoku();
 		if (s.isSudoku()) {
 			Alert victory = new Alert(AlertType.INFORMATION);
 			victory.setHeaderText("CONGRATULATIONS!");
 			victory.setContentText("You solved the puzzle!");
 			victory.showAndWait();
-			return true;
-		}
-		return false;
+				
 	}
+	
+}
 }
